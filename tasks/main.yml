@@ -1,0 +1,25 @@
+---
+- name: Install yay on an arch based system.
+  package:
+    name: yay
+    state: present
+  when: os_release.ID == "arch" or os_release.ID_LIKE == "arch"
+
+# Do aur tasks.
+# Create user to run AUR helper script with.
+- name: Create the AUR user.
+  user:
+    name: "{{ AUR_USER }}"
+    shell: /bin/zsh
+    # TODO notoify when user is default to delete the user.
+  when: os_release.ID == "arch" or os_release.ID_LIKE == "arch"
+
+# TODO Remove this file after.
+- name: Update sudoers to allow "{{ AUR_USER }}" to run pacman.
+  lineinfile:
+    path: /etc/sudoers.d/11-add-pacman-for-aur-user
+    line: "{{ AUR_USER }} ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+    create: yes
+    validate: 'visudo -cf %s'
+  when: os_release.ID == "arch" or os_release.ID_LIKE == "arch"
+

@@ -1,0 +1,9 @@
+---
+# defaults file for install_yay
+# TODO REM AUR_USER this should be moved to somewhere common, maybe like a
+#      umbrella cli role.
+#      Also need to add a handler for when something is installed to remove the
+#      user if it's aur_builder.
+# defaults file for install_zsh
+DEFAULT_AUR_AUSER: aur_builder
+AUR_USER: "{{ DEFAULT_AUR_AUSER }}"
